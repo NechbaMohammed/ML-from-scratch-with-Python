@@ -1,8 +1,12 @@
-# Used Libraries
-# calculations
+#Used Libraries:
+from adaline import*
+#calculations
+import numpy as np
+import pandas as pd
 import random
 import math
-# plotting vizualisation
+
+# matplotlib pour la visualisation des données et des séparateurs.
 import matplotlib.pyplot as plt
 # numpy pour les opérations d'algébre linéaire sur les vecteurs et les matrices.
 import numpy as np
@@ -61,9 +65,8 @@ X=np.array([[ 1.01549349e+00,  1.57846028e+00, -1.09717313e+00],
        [ 9.21437579e-01, -8.65511041e-01,  2.20837683e+00]])
 # On définit les labels associés aux données d'apprentissage, c'est un problème de classification binaire, ces des données sont choisis de telle sorte qu'on ne peut pas les séparer en deux classe linéarement par un hyperplan càd on a du bruit. 
 y=np.array([ 1, 0,  1, 0, 0,  1,  1, 0,  1,  1, 0, 0,  1, 0, 0, 0,  1,
-        1,  1,  1,  1,  1, 0, 0, 0, 0,  1, 0,  1, 0,  1,  1,  1, 0,
-       0, 0,  1,  1, 0, 0,  1, 0, 0, 0,  1, 0, 0,  1,  1,  1])
-
+        1,  1,  1,  1,  1, 0, 0, 0, 0,  1, 0,  1, 0,  1,  1,  1, 0,0,
+       0, 0,  1,  1,  0,  1, 0, 0, 0,  1, 0, 0,  1,  1,  1]) 
 # On fait une première visualisation des données.
 # On stocke dans la table red les points qu'ont pour label -1.
 red = X[y == 0]
@@ -83,59 +86,26 @@ plt.show(block=False)
 plt.pause(4)
 plt.close()
 
+
+ #chagement des labels y=0 en y=-1 dans notre base de donnée    
 def _get_cls_map( y):
-    return np.where(y <= 0, -1, 1)
+        return np.where(y <= 0, -1, 1)
 
-#Ajout de x0=1 à chaque example de notre base de donnée pour transformer (hs(x)=w.x + b) en (hs(x)=w.x)
+ #Ajout de x0=1 à chaque example de notre base de donnée pour transformer (hs(x)=w.x + b) en (hs(x)=w.x)
 def add_1_x( X):
-    x=[]
-    for i in range(len(X)):
-                    x.append(np.insert(X[i],0,1))
-    x = np.array(x)
-    return x
-def indecatrice( w, x, y):
-        if np.sign(np.dot(w,x))!=y :
-            return 1
-        return 0
-def Ls( w, x, y):
-        n = len(y)
-        s=0
-        for i in range(n):
-            s+= indecatrice( w,x[i],y[i])
-        return s/n
-def Pocket( X, y,max_iter):
-    y = _get_cls_map(y)
-    X = add_1_x(X)
-    w1 = np.array([np.zeros(len(X[0]))])
-    w1[0][0]=0.1
-    w_list=[]
+        x=[]
+        for i in range(len(X)):
+                        x.append(np.insert(X[i],0,1))
+        x = np.array(x)
+        return x
 
-    wt = w1.copy()
-    for j in range(max_iter):
-        
-        for i in range(len(y)):
-            #i=random.random()
-            estimator = np.dot(wt,X[i])
-            if np.sign(estimator) < 0 and y[i]>0:
-                wt+= X[i]
-            elif np.sign(estimator) > 0 and y[i]<0:
-                wt-= X[i]
-            if Ls(wt, X, y)<Ls(w1, X, y) :
-                w1 = wt.copy()
-                w_list.append([w1,Ls(w1, X, y)])
-                 # À chaque modification de wt on afficher l'erreur d'approximation.
-                print("Erreur d'approximation",Ls(w1,X,y))
-        
-    #Assigner les valeurs optimales
-    return np.array(w1),w_list
-    
-max_iter = 10
-w,w_list=Pocket(X,y,max_iter)
+X = add_1_x(X)
+y = _get_cls_map(y)
 
-def visualise_hyperplan(wt):
-    # On extrait les poids
-    w =wt[0]
-    w=w[0]
+w = np.zeros(X.shape[1])   
+w,t,w_list=Adaline(X,y,w)
+
+def visualise_hyperplan(w):
     # On extrait le biais
     b = w[0]
     # On veut dessiner la surface dans l'espace définie par les trois axes: x (feature1), y (feauture2) et z (feauture3).
@@ -152,22 +122,16 @@ def visualise_hyperplan(wt):
     # Il faut créer des axes 3D.
     ax=plt.axes(projection="3d")
     # On visualise les points négatifs en coleur rouge.
-    ax.plot3D(red[:, 0], red[:, 1],red[:,2], 'ob')
+    ax.plot3D(red[:, 0], red[:, 1],red[:,2], 'r.')
     # On visualise les points positifs en coleur bleu.
-    ax.plot3D(blue[:, 0], blue[:, 1],blue[:,2], 'sr')
+    ax.plot3D(blue[:, 0], blue[:, 1],blue[:,2], 'b.')
     # On visualise la surface.
     ax.plot_surface(i,j, z_values(i,j),color='green' )
     # On définit l'angle de la figure.
     ax.view_init(30, 60)
     # On ajoute un titre à la figure.
-    plt.title("hyperplan définie par: w="+str(wt[0])+" \n Erreur d'approximation ="+str(wt[1]))
+    plt.title("hyperplan définie par: w="+str(w)+" \n Erreur d'approximation ="+str(loss(X,y,w)))
     # On affiche la figure.
-    if wt[1]!=0:
-	    plt.show(block=False)
-	    plt.pause(6)
-	    plt.close()
-    else:
-            plt.show()
-
-for w in w_list:
-    visualise_hyperplan(w)
+    plt.show()
+   
+visualise_hyperplan(w)

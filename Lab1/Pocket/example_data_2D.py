@@ -1,4 +1,5 @@
 # Used Libraries
+from pocket import*
 # calculations
 import random
 import math
@@ -91,44 +92,11 @@ def add_1_x( X):
                     x.append(np.insert(X[i],0,1))
     x = np.array(x)
     return x
-def indecatrice( w, x, y):
-        if np.sign(np.dot(w,x))!=y :
-            return 1
-        return 0
-def Ls( w, x, y):
-        n = len(y)
-        s=0
-        for i in range(n):
-            s+= indecatrice( w,x[i],y[i])
-        return s/n
-def Pocket( X, y,max_iter):
-    y = _get_cls_map(y)
-    X = add_1_x(X)
-    w1 = np.array([np.zeros(len(X[0]))])
-    w1[0][0]=0.1
-    w_list=[]
+X= add_1_x(X)
+y = _get_cls_map(y)
+w =np.zeros(3)
 
-    wt = w1.copy()
-    for j in range(max_iter):
-        
-        for i in range(len(y)):
-            #i=random.random()
-            estimator = np.dot(wt,X[i])
-            if np.sign(estimator) < 0 and y[i]>0:
-                wt+= X[i]
-            elif np.sign(estimator) > 0 and y[i]<0:
-                wt-= X[i]
-            if Ls(wt, X, y)<Ls(w1, X, y) :
-                w1 = wt.copy()
-                w_list.append([w1,Ls(w1, X, y)])
-                 # À chaque modification de wt on afficher l'erreur d'approximation.
-                print("Erreur d'approximation",Ls(w1,X,y))
-        
-    #Assigner les valeurs optimales
-    return np.array(w1),w_list
-    
-max_iter = 8
-w,w_list=Pocket(X,y,max_iter)
+w,t,w_list=Pocket(X,y,w,Tmax=1000)
 
 # Plotting the Animated plot (GIF)
 from matplotlib.animation import FuncAnimation
@@ -136,14 +104,12 @@ from IPython.display import HTML
 
 # Turn off matplotlib plot in Notebook
 plt.ioff()
-# Pass the ffmpeg path
-#plt.rcParams['animation.ffmpeg_path'] = '/Users/hp/anaconda3/Lib/site-packages/ffmpeg'
 
 x1=[]
 y1=[]
 for point in X:
-    x1.append(point[0])
-    y1.append(point[1])
+    x1.append(point[1])
+    y1.append(point[2])
 colors = y
 
 fig, ax = plt.subplots(figsize=(8,6))
@@ -158,15 +124,14 @@ y2 = decision_boundary(x2)
 
 line, = ax.plot(x2, y2, 'r-', linewidth=1)
 def update(w):
-    plt.title("hyperplan définie par: w="+str(w[0])+" \n Erreur d'approximation ="+str(w[1]))
-    w=w[0]
-    alpha = -w[0][1]/w[0][2]
-    beta = -w[0][0]/w[0][2]
+    plt.title("hyperplan définie par: w="+str(w)+" \n Erreur d'approximation ="+str(loss(X,y,w)))
+    alpha = -w[1]/w[2]
+    beta = -w[0]/w[2]
     decision_boundary = lambda x : alpha*x + beta
     y2 = decision_boundary(x2)
     line.set_ydata(y2)
     
 
 
-anim = FuncAnimation(fig, update, repeat=True, frames=w_list, interval=2500)
+anim = FuncAnimation(fig, update, repeat=False, frames=w_list, interval=2500)
 plt.show()

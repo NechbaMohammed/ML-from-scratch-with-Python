@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import random
 import math
-
+from adaline import*
 # matplotlib pour la visualisation des données et des séparateurs.
 import matplotlib.pyplot as plt
 # numpy pour les opérations d'algébre linéaire sur les vecteurs et les matrices.
@@ -96,42 +96,13 @@ def add_1_x( X):
                         x.append(np.insert(X[i],0,1))
         x = np.array(x)
         return x
+X = add_1_x(X)
+y = _get_cls_map(y)
 
-def indecatrice(w, x, y):
-    if np.sign(np.dot(w, x)) != y:
-        return 1
-    return 0
+      
+w = np.zeros(X.shape[1])
 
-def Ls(w, x, y):
-    n = len(y)
-    s = 0
-    for i in range(n):
-        s += indecatrice(w, x[i], y[i])
-    return s/n
-def Adalane( X, y,max_iter):
-        y = _get_cls_map(y)
-        X = add_1_x( X )
-    
-        w = np.array([np.zeros(len(X[0]))])
-        w[0][0]=1
-        w_list = []   
-        for i in range(max_iter):
-            for j in range(len(y)):
-                e =y[j]- np.dot(w,X[j])
-                if  e :
-                    w=w+0.1*2*e[0]*X[j]
-                    w_list.append([w,Ls(w,X,y)])
-                    # À chaque modification de ws on afficher l'erreur d'approximation.
-                    print("Erreur d'approximation", Ls(w,X,y))
-
-        return np.array(w),w_list
-        
-
-
-
-            
-max_itr=8
-w,w_list=Adalane(X,y,max_itr)
+w,t,w_list=Adaline(X,y,w)
 
 #Plotting the Animated plot (GIF)
 from IPython.display import HTML
@@ -145,8 +116,8 @@ plt.ioff()
 x1=[]
 y1=[]
 for point in X:
-    x1.append(point[0])
-    y1.append(point[1])
+    x1.append(point[1])
+    y1.append(point[2])
 colors = y
 
 fig, ax = plt.subplots(figsize=(8,6))
@@ -161,13 +132,12 @@ y2 = decision_boundary(x2)
 
 line, = ax.plot(x2, y2, 'r-', linewidth=1)
 def update(w):
-    plt.title("hyperplan définie par: w="+str(w[0])+" \n Erreur d'approximation ="+str(w[1]))
-    w=w[0]
-    alpha = -w[0][1]/w[0][2]
-    beta = -w[0][0]/w[0][2]
+    plt.title("hyperplan définie par: w="+str(w)+" \n Erreur d'approximation ="+str(loss(X,y,w)))
+    alpha = -w[1]/w[2]
+    beta = -w[0]/w[2]
     def decision_boundary(x): return alpha*x + beta
     y2 = decision_boundary(x2)
     line.set_ydata(y2)
 
-anim = FuncAnimation(fig, update, repeat=True, frames=w_list, interval=3500)
+anim = FuncAnimation(fig, update, repeat=True, frames=w_list, interval=2500)
 plt.show()

@@ -1,11 +1,9 @@
-#Used Libraries:
-#calculations
-import numpy as np
-import pandas as pd
+# Used Libraries
+from pocket import *
+# calculations
 import random
 import math
-
-# matplotlib pour la visualisation des données et des séparateurs.
+# plotting vizualisation
 import matplotlib.pyplot as plt
 # numpy pour les opérations d'algébre linéaire sur les vecteurs et les matrices.
 import numpy as np
@@ -64,8 +62,9 @@ X=np.array([[ 1.01549349e+00,  1.57846028e+00, -1.09717313e+00],
        [ 9.21437579e-01, -8.65511041e-01,  2.20837683e+00]])
 # On définit les labels associés aux données d'apprentissage, c'est un problème de classification binaire, ces des données sont choisis de telle sorte qu'on ne peut pas les séparer en deux classe linéarement par un hyperplan càd on a du bruit. 
 y=np.array([ 1, 0,  1, 0, 0,  1,  1, 0,  1,  1, 0, 0,  1, 0, 0, 0,  1,
-        1,  1,  1,  1,  1, 0, 0, 0, 0,  1, 0,  1, 0,  1,  1,  1, 0,0,
-       0, 0,  1,  1,  0,  1, 0, 0, 0,  1, 0, 0,  1,  1,  1]) 
+        1,  1,  1,  1,  1, 0, 0, 0, 0,  1, 0,  1, 0,  1,  1,  1, 0,
+       0, 0,  1,  1, 0, 0,  1, 0, 0, 0,  1, 0, 0,  1,  1,  1])
+
 # On fait une première visualisation des données.
 # On stocke dans la table red les points qu'ont pour label -1.
 red = X[y == 0]
@@ -85,58 +84,27 @@ plt.show(block=False)
 plt.pause(4)
 plt.close()
 
-
- #chagement des labels y=0 en y=-1 dans notre base de donnée    
 def _get_cls_map( y):
-        return np.where(y <= 0, -1, 1)
+    return np.where(y <= 0, -1, 1)
 
- #Ajout de x0=1 à chaque example de notre base de donnée pour transformer (hs(x)=w.x + b) en (hs(x)=w.x)
+#Ajout de x0=1 à chaque example de notre base de donnée pour transformer (hs(x)=w.x + b) en (hs(x)=w.x)
 def add_1_x( X):
-        x=[]
-        for i in range(len(X)):
-                        x.append(np.insert(X[i],0,1))
-        x = np.array(x)
-        return x
+    x=[]
+    for i in range(len(X)):
+                    x.append(np.insert(X[i],0,1))
+    x = np.array(x)
+    return x
+X = add_1_x(X)
+y = _get_cls_map(y)
 
-def indecatrice(w, x, y):
-    if np.sign(np.dot(w, x)) != y:
-        return 1
-    return 0
-
-def Ls(w, x, y):
-    n = len(y)
-    s = 0
-    for i in range(n):
-        s += indecatrice(w, x[i], y[i])
-    return s/n
-def Adalane( X, y,max_iter):
-        y = _get_cls_map(y)
-        X = add_1_x( X )
     
-        w = np.array([np.zeros(len(X[0]))])
-        w[0][0]=1
-        w_list = []   
-        for i in range(max_iter):
-            for j in range(len(y)):
-                e =y[j]- np.dot(w,X[j])
-                if  e :
-                    w=w+0.1*2*e[0]*X[j]
-                    w_list.append([w,Ls(w,X,y)])
-                    
-
-        return np.array(w),w_list
-        
+max_iter = 10
+w = np.zeros(4)
 
 
+w,t,w_list=Pocket(X,y,w,max_iter)
 
-            
-max_itr=8
-w,w_list=Adalane(X,y,max_itr)
-
-def visualise_hyperplan(wt):
-    # On extrait les poids
-    w =wt[0]
-    w=w[0]
+def visualise_hyperplan(w):
     # On extrait le biais
     b = w[0]
     # On veut dessiner la surface dans l'espace définie par les trois axes: x (feature1), y (feauture2) et z (feauture3).
@@ -153,19 +121,19 @@ def visualise_hyperplan(wt):
     # Il faut créer des axes 3D.
     ax=plt.axes(projection="3d")
     # On visualise les points négatifs en coleur rouge.
-    ax.plot3D(red[:, 0], red[:, 1],red[:,2], 'r.')
+    ax.plot3D(red[:, 0], red[:, 1],red[:,2], 'ob')
     # On visualise les points positifs en coleur bleu.
-    ax.plot3D(blue[:, 0], blue[:, 1],blue[:,2], 'b.')
+    ax.plot3D(blue[:, 0], blue[:, 1],blue[:,2], 'sr')
     # On visualise la surface.
     ax.plot_surface(i,j, z_values(i,j),color='green' )
     # On définit l'angle de la figure.
     ax.view_init(30, 60)
     # On ajoute un titre à la figure.
-    plt.title("hyperplan définie par: w="+str(wt[0])+" \n Erreur d'approximation ="+str(wt[1]))
+    plt.title("hyperplan définie par: w="+str(w)+" \n Erreur d'approximation ="+str(loss(X,y,w)))
     # On affiche la figure.
-    if wt[1]!=0:
+    if w[1]!=0:
 	    plt.show(block=False)
-	    plt.pause(4)
+	    plt.pause(6)
 	    plt.close()
     else:
             plt.show()
