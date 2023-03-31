@@ -2,24 +2,28 @@
 In this package, we've implemented a few basic machine learning algorithms from scratch. The algorithms are implemented in Python 3.8. The algorithms are as follows:
 
   - [Single Layer Perceptron Algorithm](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/tree/main/Lab1/Perceptron)
-Pocket Perceptron
-Adaline Algorithm with delta rule
-Linear Regression
-Logistic Regression
-Polynomial Regression
-One-vs-All and One-vs-One Classifiers
-Furthermore, we've implemented a few basic algorithms useful in the cristalization of learning theory :
-
-Non-Linear Transformation
-Cross Validation with K-Fold
-Gradient Descent for Linear and Logistic Regression
-Regularization for Linear and Logistic Regression
-Bias and Variance (not implemented yet)
-Vapnik Chervonenkis Dimension (VC-Dimension)
-Covering and Uniform Covering Number
-Finally, we also added a few basic functions to help you create dummy data and plot results of the algorithms :
-
-Generate Dummy Data (in 2D and 3D)
-Plot Linear Decision Boundary (in 2D and 2D)
-Plot Non-Linear Decision Boundary (in 2D)
-Plot Linear Regression (in 2D)
+  - [Pocket Perceptron](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/tree/main/Lab1/Pocket)
+  - [Adaline Algorithm with delta rule](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/tree/main/Lab1/Adaline)
+  - [Linear Regression](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/tree/main/Lab2/Linear%20regression)
+  - [Logistic Regression](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/tree/main/Lab2/logistic%20regression)
+  - [Polynomial Regression](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab3/polynomial_regression.py)
+  - [One-vs-All and One-vs-One Classifiers](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/tree/main/Lab5)
+  - [one-vs-one-Perceptron](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_one_Perceptron.ipynb)
+  - [one-vs-one-Adaline](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_one_Adaline.ipynb)
+  - [one-vs-one-Pocket](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_one_Pocket.ipynb)
+  - [one-vs-one-Polynomial-transformation-with-Adaline](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_one_Polynomial_transformation_with_Adaline.ipynb)
+  - [one-vs-one-Logistic-Regression](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_one_Logistic_Regression.ipynb)
+  - [one-vs-one-Polynomial-transformation-with-Pocket](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_one_Polynomial_transformation_with_Pocket.ipynb)
+  - [one-vs-all-Perceptron](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_all_Perceptron.ipynb)
+  - [one-vs-all-Adaline](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_all_Adaline.ipynb)
+  - [one-vs-all-Logistic-Regression](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_all_Logistic_Regression.ipynb)
+  - [one-vs-all-Pocket](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_all_Pocket.ipynb)
+  - [one-vs-all-Polynomial-transformation-with-Adaline](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_all_Polynomial_transformation_with_Adaline%20.ipynb)
+  - [one-vs-all-Polynomial-transformation-with-Pocket](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/one_vs_all_Polynomial_transformation_with_Pocket.ipynb)
+  - [(Dense Random, Hamming decoding)-Perceptron](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/(Dense%20Random%2C%20Hamming%20decoding)%20_Perceptron.ipynb)
+  - [(Dense Random, Hamming decoding)-Adaline](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/(Dense%20Random%2C%20Hamming%20decoding)-Adaline.ipynb)
+  - [(Dense Random, Hamming decoding)-Logistic-Regression](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/(Dense%20Random%2C%20Hamming%20decoding)_Logistic_Regression.ipynb)
+  - [(Dense Random, Hamming decoding)-Polynomial-transformation-with-Adaline](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/(Dense%20Random%2C%20Hamming%20decoding)_Polynomial_transformation_with_Adaline.ipynb)
+  - [(Dense Random, Hamming decoding)-Polynomial-transformation-with-Pocket](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab5/(Dense%20Random%2C%20Hamming%20decoding)_Polynomial_transformation_with_Pocket.ipynb)
+  - [Cross Validation with K-Fold](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab6/k_fold.py)
+  - [Regularization for Linear and Logistic Regression](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/blob/main/Lab7/regularization.py)
