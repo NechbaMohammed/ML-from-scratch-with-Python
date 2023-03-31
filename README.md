@@ -1,7 +1,7 @@
 # ML-from-scratch-with-Python
 In this package, we've implemented a few basic machine learning algorithms from scratch. The algorithms are implemented in Python 3.8. The algorithms are as follows:
 
-  - [Single Layer Perceptron Algorithm] (https://github.com/NechbaMohammed/ML-from-scratch-with-Python/tree/main/Lab1/Perceptron)
+  - [Single Layer Perceptron Algorithm](https://github.com/NechbaMohammed/ML-from-scratch-with-Python/tree/main/Lab1/Perceptron)
 Pocket Perceptron
 Adaline Algorithm with delta rule
 Linear Regression
